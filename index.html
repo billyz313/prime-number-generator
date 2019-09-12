@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Prime number generator</title>
+    <script>
+        const fillRange = (start, end) =>
+            [...Array(end - start + 1)].map((item, index) => start + index);
+
+        const getPrimesTo = x => {
+            let primeArray = fillRange(0, parseInt(x));
+            for (var i = 2; i < Math.sqrt(parseInt(x)); i++) {
+                if (primeArray[i]) {
+                    for (var j = Math.pow(primeArray[i], 2); j <= x; j += primeArray[i]) {
+                        primeArray[j] = false;
+                    }
+                }
+            }
+            primeArray.splice(0, 2); // remove 0 and 1
+            document.getElementById("primes").innerText = (primeArray.filter(Boolean)).toString();
+            
+        };
+
+        const processPrimes = () => {
+            document.getElementById("primes").innerText = "";
+            !isNaN(parseInt(document.getElementById("txtEndRange").value))
+                ? new Promise(resolve => {
+                    setTimeout(function () {
+                        getPrimesTo(document.getElementById("txtEndRange").value)
+                    }, 1);
+                })
+                : document.getElementById("primes").innerText = "Please enter an integer";
+        };
+
+        const setEvent = () => {
+            document.getElementById("txtEndRange").addEventListener("keyup", event => {
+                document.getElementById("btnSubmit").click();
+            });
+        };
+
+    </script>
+</head>
+<body onload="setEvent()">
+    Print prime number from 0 to <input id="txtEndRange" type="text" placeholder="Enter number" /> <button id="btnSubmit" onclick="processPrimes()" value="Submit" title="Submit">Submit</button>
+    <br />
+    <span id="primes">Please enter an integer</span>
+</body>
+</html>
