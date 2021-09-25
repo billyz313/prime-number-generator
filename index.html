@@ -9,9 +9,9 @@
 
         const getPrimesTo = x => {
             let primeArray = fillRange(0, parseInt(x));
-            for (var i = 2; i < Math.sqrt(parseInt(x)); i++) {
+            for (let i = 2; i < Math.sqrt(parseInt(x) + 1); i++) {
                 if (primeArray[i]) {
-                    for (var j = Math.pow(primeArray[i], 2); j <= x; j += primeArray[i]) {
+                    for (let j = Math.pow(primeArray[i], 2); j <= x; j += primeArray[i]) {
                         primeArray[j] = false;
                     }
                 }
